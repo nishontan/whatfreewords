@@ -136,6 +136,8 @@ function words_to_coord(words) {
 
 </script>
     <h2>WhatFreeWords</h2>
+	<input type="text" placeholder="च्याउ.विक्रेता.बोली" id="uniqueID" name="search">
+	<input type="button"  onclick="match_words_to_coords()" value="WORDS TO COORDINATES">
     <p id="output_text">words.are.bad</p>
    <!-- <p id="output_text4">00000 00000 00000</p>
     <p id="output_text2">0.000000</p>
@@ -152,12 +154,26 @@ function words_to_coord(words) {
           }) 
         ],
         view: new ol.View({
-          center: ol.proj.fromLonLat([-0.116708278, 51.50844113]),
+          center: ol.proj.fromLonLat([85.3139,27.6939]),
           zoom: 16
         })
       });
+	
+	function match_words_to_coords(){
+		words = document.getElementById("uniqueID").value
+		console.log(words)
+		coord = words_to_coord(words)
+		console.log(coord)
+		center_map(coord[0],coord[1])
+	}
+
+	function center_map(long, lat) {
+		console.log("Long: " + long + " Lat: " + lat);
+		map.getView().setCenter(ol.proj.transform([long, lat], 'EPSG:4326', 'EPSG:3857'));
+		map.getView().setZoom(16);
+}  
 	var marker = new ol.Overlay({
-                        position: ol.proj.fromLonLat([-0.116708278, 51.50844113]),
+                        position: ol.proj.fromLonLat([85.3139,27.6939]),
                         positioning: 'center-center',
                         element: document.getElementById('marker'),
                         stopEvent: false
